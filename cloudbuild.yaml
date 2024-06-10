@@ -1,0 +1,10 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/testservice-426003/testservice', '.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/testservice-426003/testservice']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['run', 'deploy', 'flask-firestore', '--image', 'gcr.io/testservice-426003/testservice', '--platform', 'managed', '--region', 'us-central1', '--allow-unauthenticated']
+
+images:
+  - 'gcr.io/$PROJECT_ID/testservice’
